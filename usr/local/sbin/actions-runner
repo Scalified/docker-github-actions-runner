@@ -1,0 +1,23 @@
+#!/bin/sh
+
+if [ -z "$URL" ]; then
+    echo "ERROR GitHub Organization 'URL' environment variable undefined"
+    exit 1
+fi
+
+if [ -z "$TOKEN" ]; then
+    echo "ERROR GitHub Actions Runner 'TOKEN' environment variable undefined"
+    exit 1
+fi
+
+./config.sh \
+    --name $(hostname) \
+    --unattended \
+    --replace \
+    --url "$URL" \
+    --token "$TOKEN" \
+    --labels "$LABELS" \
+    --runnergroup "$GROUP"
+
+./run.sh
+
