@@ -1,6 +1,6 @@
 # GitHub Actions Runner Docker Image
 
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/Scalified/helm-jboss/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/Scalified/docker-github-actions-runner/blob/master/LICENSE)
 [![Docker Pulls](https://img.shields.io/docker/pulls/scalified/github-actions-runner.svg)](https://hub.docker.com/r/scalified/github-actions-runner)
 [![Release](https://img.shields.io/github/v/release/Scalified/docker-github-actions-runner?style=flat-square)](https://github.com/Scalified/docker-github-actions-runner/releases/latest)
 
