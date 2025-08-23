@@ -2,7 +2,7 @@ FROM debian:bookworm-slim
 
 LABEL maintainer="Scalified <scalified@gmail.com>"
 
-ARG ACTIONS_RUNNER_VERSION="2.327.1"
+ARG ACTIONS_RUNNER_VERSION="2.328.0"
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV RUNNER_ALLOW_RUNASROOT="1"
@@ -11,6 +11,7 @@ RUN apt update && \
     apt install -y --no-install-recommends \
         ca-certificates \
         curl \
+        cron \
         wget \
         git \
         gnupg \
@@ -28,7 +29,8 @@ RUN mkdir -p /etc/apt/keyrings && \
 
 RUN apt update && \
     apt install -y --no-install-recommends \
-        docker-ce && \
+        docker-ce \
+        docker-buildx-plugin && \
     apt clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -38,8 +40,7 @@ RUN curl -sSLo actions-runner.tar.gz "https://github.com/actions/runner/releases
     && tar -zxvf actions-runner.tar.gz \
     && rm -rf actions-runner.tar.gz
 
-COPY etc /etc/
-COPY usr /usr/
+COPY rootfs /
 
-ENTRYPOINT ["supervisord", "-c", "/etc/supervisord.conf"]
+ENTRYPOINT ["/usr/local/bin/entrypoint"]
 

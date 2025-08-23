@@ -1,0 +1,8 @@
+#!/bin/sh
+
+DOCKER_PRUNE_SCHEDULE="${DOCKER_PRUNE_SCHEDULE:-37 4 2 * *}"
+
+echo "${DOCKER_PRUNE_SCHEDULE} root /usr/local/bin/docker-system-prune > /proc/1/fd/1 2>/proc/1/fd/2" > "/etc/cron.d/docker-system-prune"
+
+supervisord -c "/etc/supervisord.conf"
+
