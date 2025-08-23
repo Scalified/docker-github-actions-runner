@@ -12,7 +12,8 @@
 
 1. Add a new [`GitHub Actions Runner`](https://github.com/organizations/${GITHUB_ORG_NAME}/settings/actions/runners)
 2. Copy the runner token (`$GITHUB_ACTIONS_RUNNER_TOKEN`) from the runner’s details page
-3. Run the `scalified/github-actions-runner` Docker image:
+3. Create a `docker` directory to mount as `/var/lib/docker`
+4. Run the `scalified/github-actions-runner` Docker image:
 
 ```
 docker run \
@@ -21,6 +22,8 @@ docker run \
     --hostname ghar-runner-1 \
     --restart unless-stopped \
     --privileged \
+    -v $(pwd)/docker:/var/lib/docker \
+    -e "DOCKER_PRUNE_SCHEDULE=0 0 * * 1" \
     -e URL=https://github.com/$GITHUB_ORG_NAME \
     -e TOKEN=AAAAAAAAAAAAAAAAAAAAAAAAAAAAA \
     -e LABELS=ghar-runner-1 \
@@ -28,12 +31,13 @@ docker run \
     scalified/github-actions-runner
 ```
 
-| Environment Variable | Description                                                         |
-|----------------------|---------------------------------------------------------------------|
-| `URL`                | **GitHub** organization URL: `https://github.com/$GITHUB_ORG_NAME`  |
-| `TOKEN`              | **GitHub** Actions Runner token displayed after adding a new runner |
-| `LABELS`             | Labels assigned to the **GitHub Actions Runner**                    |
-| `GROUP`              | **GitHub** Actions Runner group                                     |
+| Environment Variable    | Description                                                              |
+|-------------------------|--------------------------------------------------------------------------|
+| `DOCKER_PRUNE_SCHEDULE` | **Cron** schedule for auto docker system prune ("37 4 2 * *" by default) |
+| `URL`                   | **GitHub** organization URL: `https://github.com/$GITHUB_ORG_NAME`       |
+| `TOKEN`                 | **GitHub** Actions Runner token displayed after adding a new runner      |
+| `LABELS`                | Labels assigned to the **GitHub Actions Runner**                         |
+| `GROUP`                 | **GitHub** Actions Runner group                                          |
 
 
 ---
