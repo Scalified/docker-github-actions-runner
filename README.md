@@ -23,7 +23,6 @@ docker run \
     --restart unless-stopped \
     --privileged \
     -v $(pwd)/docker:/var/lib/docker \
-    -e "DOCKER_PRUNE_SCHEDULE=0 0 * * 1" \
     -e URL=https://github.com/$GITHUB_ORG_NAME \
     -e TOKEN=AAAAAAAAAAAAAAAAAAAAAAAAAAAAA \
     -e LABELS=ghar-runner-1 \
@@ -33,7 +32,6 @@ docker run \
 
 | Environment Variable    | Description                                                              |
 |-------------------------|--------------------------------------------------------------------------|
-| `DOCKER_PRUNE_SCHEDULE` | **Cron** schedule for auto docker system prune ("37 4 2 * *" by default) |
 | `URL`                   | **GitHub** organization URL: `https://github.com/$GITHUB_ORG_NAME`       |
 | `TOKEN`                 | **GitHub** Actions Runner token displayed after adding a new runner      |
 | `LABELS`                | Labels assigned to the **GitHub Actions Runner**                         |
